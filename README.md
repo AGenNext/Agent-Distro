@@ -1,63 +1,72 @@
-# Agent-Kit
+# Agent-Distro
 
-`Agent-Kit` owns portable AGenNext runtime kits.
+`Agent-Distro` owns runnable AGenNext distributions.
 
-A kit is a packaged set of components, manifests, scripts, and artifacts that can run AGenNext in a specific environment.
+A distro is a curated, assembled, versioned runtime package made from AGenNext artifacts.
 
-## Purpose
+It may be small or large. The defining property is not size; the defining property is that it is a runnable assembly.
 
-`Agent-Kit` is the middle layer between source code and runtime environment.
+## What Agent-Distro Produces
 
-```txt
-source repos
-  -> Agent-Kit
-  -> target environment
-```
+Agent-Distro may produce:
 
-## Responsibilities
+- minimal local distro
+- single-node distro
+- air-gapped distro
+- container-image distro
+- enterprise install distro
 
-`Agent-Kit` owns:
+## What A Distro Contains
 
-- air-gapped bundles
-- local development kits
-- single-node install kits
-- enterprise install packages
-- portable manifests
-- offline verification scripts
-- runtime composition scripts
-- model/skill/tool packaging references
+A distro may contain:
 
-## Not Responsibilities
+- executables
+- container images
+- OCI artifacts
+- local model artifacts
+- skill manifests
+- tool manifests
+- registry indexes
+- startup scripts
+- install scripts
+- verification scripts
+- checksums
+- runtime composition manifests
 
-`Agent-Kit` does not own:
-
-- capability orchestration
-- model routing
-- model execution
-- tool implementation
-- environment provisioning
-- deployment automation internals
-
-## Core Component Flow
+## Core Runtime Shape
 
 ```txt
 Agent-Kernel
+  -> Agent-Runtime
+      -> capabilities/tools
+
+Agent-Kernel
   -> model-router
-  -> Model-Runner
-  -> local model artifacts
+      -> Model-Runner
+          -> models
 ```
 
 ## Repo Boundaries
 
 | Repo | Responsibility |
 |---|---|
-| Agent-Kernel | Capability orchestration |
+| Agent-Kernel | Orchestration/control loop |
+| Agent-Runtime | Capability/tool execution runtime |
 | model-router | Model selection and routing |
-| Model-Runner | Model execution/runtime |
+| Model-Runner | Model execution runtime |
+| Agent-Environment | Target host/runtime surface |
 | Agent-deploy | Deployment automation |
-| Agent-Environment | Target runtime surface |
-| Agent-Kit | Portable runtime kits |
+| Agent-Distro | Runnable assembled distributions |
 
-## Design Rule
+## Design Rules
 
-A kit must be explicit, portable, inspectable, and runnable without hidden cloud dependencies.
+A distro must be:
+
+- explicit
+- inspectable
+- versioned
+- reproducible
+- runnable
+- portable
+
+An air-gapped distro must not require hidden downloads or hosted services at runtime.
